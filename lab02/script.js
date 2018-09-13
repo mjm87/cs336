@@ -26,8 +26,17 @@ Person.prototype.getAge = function(){
     return age;
 }
 
+// add friend
 Person.prototype.addFriend = function(friend){
     this.friends.push(friend)
+}
+
+// TODO: consider adding a removeFriend()
+// I mean what about the evenutality when someone dies. I don't really want to get birthday updates.
+
+// greeting
+Person.prototype.greet = function(){
+	console.log("Mae govannen");
 }
 
 var me = new Person("Michel", "09/31/1996");
@@ -38,26 +47,23 @@ console.log(me);
 
 console.log(me.getAge());
 
+function Student(name, birthdate, subject){
+	Person.call(this, name, birthdate);	
+	this.subject = subject;
+}
 
-// Rectangle.prototype = Object.create(Shape.prototype);
-// Rectangle.prototype.area = function() {
-//     return this.width * this.height;
-// };
-// var r1 = new Rectangle(1, 2, 1, 1);
-// console.log(r1);
-// console.log(r1.area());
-// r1.move(2, 3);
-// console.log(r1);
+Student.prototype = Object.create(Person.prototype);
+Student.prototype.greet = function(){
+	console.log("<<bashfully>>: Hi.");
+}
 
-// // 10. ----------------------------------
-// // Polymorphism
-// function Circle(x, y, radius) {
-//     Shape.call(this, x, y);
-//     this.radius = radius;
-// }
-// Circle.prototype = Object.create(Shape.prototype);
-// Circle.prototype.area = function() {
-//     return Math.PI * this.radius * this.radius;
-// };
-// var c1 = new Circle(1, 2, 1);
-// console.log(c1.area());
+
+var acquaintance = new Student("David", "08/19/1996", "Engineering");
+console.log(acquaintance);
+
+
+console.log("The acquaintance is a person: " , acquaintance instanceof Person);
+console.log("The acquaintance is a student: " , acquaintance instanceof Student);
+console.log("The friend is a person: " , friend instanceof Person);
+console.log("The friend is a student: " , friend instanceof Student);
+
