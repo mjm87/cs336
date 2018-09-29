@@ -1,4 +1,4 @@
-/*** Style for doc3.html (Tables) ***/
+ /* Styling for the table portion */
 
 #demo-table {
   font: 100% sans-serif;
@@ -55,12 +55,9 @@
   padding:.5em .5em .5em 3em;
 }
 
-#demo-table > tbody > td {
-  border-bottom: .1em solid green;
-}
-
-#demo-table > tbody > td + td {
-    border-left: .1em solid green;
+#demo-table tbody > tr > td {
+  border-top: .1em solid green;
+  border-left: .1em solid green;
 }
 
 #demo-table tbody th:after {

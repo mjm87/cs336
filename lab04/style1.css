@@ -1,5 +1,4 @@
-
-/* Styling for the string: Cascading Style Sheet */
+/* Styling for the strings: Cascading Style Sheet */
 
 /* page-font */
 body {
@@ -27,7 +26,7 @@ body {
 strong {
   color: #f00;
   font-size: 2em;
-  background-color: #ddf;
+  /* background-color: #ddf; */
 } 
 
 .spinach {
