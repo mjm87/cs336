@@ -1,0 +1,14 @@
+{
+  "name": "homework1",
+  "version": "1.0.0",
+  "description": "a webserver to store and display person info",
+  "main": "homework1.js",
+  "scripts": {
+    "start": "nodemon homework1.js"
+  },
+  "author": "Michel Momeyer",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
