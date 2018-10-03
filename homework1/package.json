@@ -4,7 +4,7 @@
   "description": "a webserver to store and display person info",
   "main": "homework1.js",
   "scripts": {
-    "start": "nodemon homework1.js"
+    "start": "node homework1.js"
   },
   "author": "Michel Momeyer",
   "license": "ISC",
