@@ -12,7 +12,6 @@ people = [
 function GetPerson(params){
     for(i in people) {
         let person = people[i];
-        console.log(person);
         if(person.id == params.id){
             return person;
         }
