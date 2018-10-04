@@ -34,14 +34,14 @@ app.get('/person/:id', function(req, res) {
 // displays the specified person's name (if it exists)
 app.get('/person/:id/name', function(req, res) {
     let person = GetPerson(req.params);
-    if (person != null && person.name != null) res.send("Name: " + person.name);
+    if (person != null && person.name != null) res.json(person.name);
     else res.sendStatus(404);
 });
 
 // displays the specified person's "seniority"
 app.get('/person/:id/years', function(req, res){
     let person = GetPerson(req.params);
-    if (person != null && person.years != null) res.send("Seniority: " + person.years);
+    if (person != null && person.years != null) res.json(person.years);
     else res.sendStatus(404);
 });
 
