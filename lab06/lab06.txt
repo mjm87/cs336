@@ -1,0 +1,31 @@
+Responses to questions in the lab
+
+Exercise 6.1 A
+
+Perhaps there's some fancy way of using the browser to handle other HTTP requests, but the only one I could find without writing client-side JS was GET.
+I was able to GET, PUT, POST, DELETE, HEAD, etc through curl
+
+curl -X GET localhost:3000/requests
+curl -X HEAD localhost:3000/requests
+curl -d data=Something -X PUT localhost:3000/requests
+curl -d data=Something -X POST localhost:3000/requests
+curl -d data=Something -X DELETE localhost:3000/requests
+
+also by post-fixing --head I was able to look at the HTTP response header itself
+
+curl -X OPTIONS localhost:3000/requests returned the NOT_IMPLEMENTED status as expected
+
+It appears that the browser is really just designed to pull the data from the webserver, instead of being designed as an interface to upload/modify the webserver.
+Of course there are ways around that, many of which we'll need to use to create proper SPA's but weren't intentionally built in with Sir Berners Lee's initial design.
+I didn't verify this, but curl's GET command might not do so well with pictures and probably wouldn't apply styling, whihc is obviously better suited for the web browser.
+
+
+Exercise 6.1 B
+
+I think the most applicable response code for pages that aren't defined by an express route would be the generic 404 if you are in fact looking for a page that doesn't exist.
+If the request type you send isn't supported but the route/path is defined, NOT_IMPLEMENTED (501) seems to be more appropriate.
+
+
+
+
+
