@@ -27,5 +27,16 @@ If the request type you send isn't supported but the route/path is defined, NOT_
 
 
 
+Exercise 6.2 A
 
+HTTP forms support GET and POST directly.
 
+Exercise 6.2 B
+
+The form data appears to be being sent back something like the following:
+
+user_name=Michel&user_mail=mjm87%40students.calvin.edu&user_message=Helloworld%0D%0A
+
+which looks like some strange formatting. 
+I can't tell from my sample data if the data has been modified, but there might be some special characters I wasn't thinking about.
+Those might just be a part of the JSON unlike format?

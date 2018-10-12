@@ -47,20 +47,22 @@ app.delete('/requests', function(req, res) {
     res.send("Received: DELETE " + req.body.data);
 });
 
+// Responds to form posts from the forms/index.html example.
+app.post('/forms', function(req, res) {
+    res.send('Name: ' + req.body.user_name + 
+            '\nE-mail: ' + req.body.user_mail +
+            '\nMessage: ' + req.body.user_message);  
+});
+
+
 // other unsupported requests
-app.all('/requests', function(req, res) {
+app.all('*', function(req, res) {
     res.status(http_status.NOT_IMPLEMENTED);
     res.send("Received unsupported request");
 });
 
 // --------------------------------
 // HTTP form example
-
-// Responds to form posts from the forms/index.html example.
-app.post('/forms', function(req, res) {
-    res.send('Hello, form POST!<br>Posted message: <code>'
-	     + req.body.user_message + '</code>');
-});
 
 // Setting the server up to listen
 app.listen(PORT, HOST, () => {
