@@ -1,14 +1,19 @@
 {
-  "name": "lab06",
+  "name": "lab06-http",
   "version": "1.0.0",
-  "description": "HTTP lab",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
+  "description": "lab06 exercises",
   "author": "Michel Momeyer",
   "license": "ISC",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
   "dependencies": {
-    "express": "^4.16.3"
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "http-status-codes": "^1.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
