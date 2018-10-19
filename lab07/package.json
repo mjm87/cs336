@@ -1,0 +1,14 @@
+{
+  "name": "lab07",
+  "version": "1.0.0",
+  "description": "jQuery and jQuery-UI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Michel Momeyer",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
