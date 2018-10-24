@@ -25,11 +25,11 @@ function GetPerson(params){
 }
 
 // adds a person object to the person "database"
-function AddPerson(id, name, years) {
+function AddPerson(query) {
     people.push({
-        "id": id,
-        "name": name,
-        "years": years
+        "id": query.id,
+        "name": query.name,
+        "years": query.years
     });
 }
 
@@ -39,7 +39,7 @@ app.use(express.static('public'))
 app.get('/people', (req, res) => res.json(people));
 
 app.post('/people', function (req, res) {
-    AddPerson(req.query.id, req.query.name, req.query.years);
+    AddPerson(req.body);
     res.sendStatus(200);
     //todo implement problematic states (i.e. data not present, collision with existing person, etc.)
 });
