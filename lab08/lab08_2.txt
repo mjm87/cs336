@@ -1,0 +1,6 @@
+Answers to Exercise 8.2
+-----------------------
+A1: Explain the component structure of the application. What makes the UI composable and why does it matter?
+
+Our application is primarily composed of various elements including a comment object, a comments list object, 
+a comment form, etc... UI tend to lend themselves to componentization since most web-

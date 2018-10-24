@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="lab07.css">
     -->
 
-    <script src="jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -17,7 +17,24 @@
 
 </head>
 <body>
-    <h1>Stuff</h1>
-    <button class="ui-button ui-widget ui-corner-all">A button element</button>
+    <h1> Add Person </h1>
+    
+    <form action="/people" method="post">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div>
+                <label for="mail">ID:</label>
+                <input type="text" id="id" name="id"
+            </div>
+            <div>
+                <label for="years">Years:</label>
+                <textarea id="years" name="years"></textarea>
+            </div>
+                <button type="submit" class="ui-button ui-widget ui-corner-all">Send your message</button>
+            <div class="button">
+            </div>
+        </form>
 </body>
 </html>
