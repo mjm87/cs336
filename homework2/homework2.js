@@ -6,6 +6,7 @@ const bodyParser = require("body-parser")
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+/* In-memory database */
 people = [
     {"id":2425366, "name":"Michel Momeyer", "years":3}, 
     {"id":0000042, "name":"Virginia Van Andel", "years":20},

@@ -4,37 +4,39 @@
     <meta charset="utf-8">
     <title>Add Person</title>
 
-    <!--- Unnecesary pieces???
-        <link rel="stylesheet" type="text/css" href="lab07.css">
-    -->
+    <!-- importing jquery libraries -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="jquery-demo.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
+    <!-- Custom inserts -->
     <script src="addPerson.js"></script>
 
 </head>
 <body>
     <h1> Add Person </h1>
-    
-    <form action="/people" method="post">
-            <div>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name">
-            </div>
-            <div>
-                <label for="mail">ID:</label>
-                <input type="text" id="id" name="id"
-            </div>
-            <div>
-                <label for="years">Years:</label>
-                <textarea id="years" name="years"></textarea>
-            </div>
-                <button type="submit" class="ui-button ui-widget ui-corner-all">Send your message</button>
-            <div class="button">
-            </div>
+    <div id="dialog-form" title="Create new user">
+        <form action="/people" method="post">
+            <fieldset>
+                <!-- Name -->
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" placeholder="Jayne Cobb" class="text ui-widget-content ui-corner-all">
+
+                <!-- ID -->
+                <label for="id">ID</label>
+                <input type="text" name="id" id="id" placeholder="1234567" class="text ui-widget-content ui-corner-all">
+
+                <!-- Seniority -->
+                <label for="years">years</label>
+                <input type="years" name="years" id="years" placeholder="0" class="text ui-widget-content ui-corner-all">
+            
+                <!-- Submit button -->
+                <div class="button">
+                    <button type="submit" class="ui-button ui-widget ui-corner-all">Send your message</button>
+                </div>
+            </fieldset>
         </form>
+    </div>
 </body>
 </html>
