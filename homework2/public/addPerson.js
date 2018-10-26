@@ -7,12 +7,13 @@ $( 'form' ).submit(function( event ) {
     type: 'POST',
     url: '/people',
     data: form.serialize(),
-    dataType: 'json',
-    success: function( resp ) {
-      console.log("Sucessfully added person");
-      $('#name').value("");
-      $('#id').value("");
-      $('#years').value = "";
+    success: function() {
+      // clearing the form on completion
+      form.trigger("reset");
+      console.log("Person added.");
     }
+  })
+  .fail(function(){
+    console.log("Couldn't add person.");
   });
 });
