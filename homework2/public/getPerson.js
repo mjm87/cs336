@@ -15,6 +15,6 @@ $('form').submit(function(event) {
       $("#return-years").html(resp.years);
     }
   }).fail(function(){
-    console.log("failed");
+    alert("Couldn't find anyone with " + $('#id').val() + " id.\n Please try another person id.");
   });
 });

@@ -13,7 +13,6 @@ people = [
     {"id":666, "occupation":"problem-child"}
 ];
 
-
 // retrieves the person object from the database with the id specified in the url
 function GetPerson(id){
     for(i in people) {
@@ -67,7 +66,8 @@ app.get('/people', (req, res) => res.json(people));
 
 // adds a person to the "database"
 app.post('/people', function (req, res) {
-    if(AddPerson(req.body) != null) res.sendStatus(200);
+    let person = AddPerson(req.body);
+    if(person != null) res.sendStatus(200);
     else res.sendStatus(404);
 });
 
@@ -80,13 +80,15 @@ app.get('/person/:id', function(req, res) {
 
 // creates a new person record
 app.put('/person/:id', function (req, res) {
-    if(AddPerson(req.body) != null) res.sendStatus(200);
+    let person = AddPerson(req.body);
+    if(person != null) res.sendStatus(200);
     else res.sendStatus(404);
 });
 
 // creates a new person record
 app.post('/person/:id', function (req, res) {
-    if(AddPerson(req.body) != null) res.sendStatus(200);
+    let person = AddPerson(req.body);
+    if(person != null) res.sendStatus(200);
     else res.sendStatus(404);
 });
 

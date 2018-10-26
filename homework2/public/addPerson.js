@@ -3,14 +3,16 @@ $( 'form' ).submit(function( event ) {
 
   var form = $( this );
 
-  console.log("sending: " + form.serialize());
   $.ajax({
     type: 'POST',
     url: '/people',
     data: form.serialize(),
     dataType: 'json',
     success: function( resp ) {
-      console.log( resp );
+      console.log("Sucessfully added person");
+      $('#name').value("");
+      $('#id').value("");
+      $('#years').value = "";
     }
   });
 });
