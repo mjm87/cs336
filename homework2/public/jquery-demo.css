@@ -13,3 +13,11 @@ div#users-contain table td, div#users-contain table th { border: 1px solid #eee;
 ::placeholder {
     color: grey;
 }
+
+/* Used for hiding/revealing the returned person info in getPerson.html */
+.hidden {
+    visibility: hidden;
+}
+.visible {
+    visibility: visible;
+}

@@ -1,16 +1,20 @@
-$( 'form' ).submit(function( event ) {
+$('form').submit(function(event) {
   event.preventDefault();
 
-  var form = $( this );
-
-  console.log("sending: " + form.serialize());
   $.ajax({
     type: 'GET',
-    url: '/people',
-    data: form.serialize(),
+    url: '/person/'+ $('#id').val(),
     dataType: 'json',
     success: function( resp ) {
-      console.log( resp );
+      // unhide the Person Data fields
+      $("#users-contain").removeClass("hidden").addClass("visible");
+
+      // update the page with the retrieved person data
+      $("#return-name").html(resp.name);
+      $("#return-id").html(resp.id);
+      $("#return-years").html(resp.years);
     }
+  }).fail(function(){
+    console.log("failed");
   });
 });

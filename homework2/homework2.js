@@ -15,23 +15,49 @@ people = [
 
 
 // retrieves the person object from the database with the id specified in the url
-function GetPerson(params){
+function GetPerson(id){
     for(i in people) {
-        let person = people[i];
-        if(person.id == params.id){
-            return person;
+        let p = people[i];
+        // ensuring we only return valid matches
+        if(isAValidPerson(p)) {
+            if(p.id == id){
+                return p; 
+            }
         }
     }
     return null;
 }
 
+// deletes any people with the given ID from the database
+function DeletePerson(id){
+    people = people.filter((person, idx, arr) => person.id != id);
+}
+
 // adds a person object to the person "database"
 function AddPerson(query) {
-    people.push({
-        "id": query.id,
-        "name": query.name,
-        "years": query.years
-    });
+    
+    // create the new person object
+    let person = {};
+    person.id = query.id;
+    person.name = query.name;
+    person.years = query.years;
+
+    // filter out any existing records for this person 
+    DeletePerson(query.id);
+
+    // add(or re-add) the person to the "database"
+    if(isAValidPerson(person)){
+        people.push(person);
+        return person;
+    }
+
+    return null;
+}
+
+// validating that the given person contains at least
+// an id a name and a seniority/years value
+function isAValidPerson(person) {
+    return (person.id != null && person.name != null && person.years != null);
 }
 
 app.use(express.static('public'))
@@ -39,18 +65,37 @@ app.use(express.static('public'))
 // displays the list of all the people objects in the "database"
 app.get('/people', (req, res) => res.json(people));
 
+// adds a person to the "database"
 app.post('/people', function (req, res) {
-    AddPerson(req.body);
-    res.sendStatus(200);
-    //todo implement problematic states (i.e. data not present, collision with existing person, etc.)
+    if(AddPerson(req.body) != null) res.sendStatus(200);
+    else res.sendStatus(404);
 });
 
 // displays the specified person object (if the person exists)
 app.get('/person/:id', function(req, res) {
-    let person = GetPerson(req.params);
+    let person = GetPerson(req.params.id);
     if (person != null) res.json(person);
     else res.sendStatus(404);
 });
+
+// creates a new person record
+app.put('/person/:id', function (req, res) {
+    if(AddPerson(req.body) != null) res.sendStatus(200);
+    else res.sendStatus(404);
+});
+
+// creates a new person record
+app.post('/person/:id', function (req, res) {
+    if(AddPerson(req.body) != null) res.sendStatus(200);
+    else res.sendStatus(404);
+});
+
+// delete a person record
+app.delete('/person/:id', function (req, res) {
+    DeletePerson(req.params.id);
+    res.sendStatus(200);
+});
+
 
 // displays the specified person's name (if it exists)
 app.get('/person/:id/name', function(req, res) {
