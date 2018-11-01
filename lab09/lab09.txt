@@ -1,0 +1,16 @@
+What good has this bundling done? How big is the new bundle file? 
+Check the Chrome DevTools network log to see what files are being loaded.
+
+<< It's definitley shrunk things. ?? >> The new bundle is 5.96 kB. For some reason, Chrome refuses to include base.css, but includes react.js, react-dom.js, browser.js, jquery.min.js, remarkable.min.js, and bundle.js
+
+What role did Babel play in the bundling?
+
+    Babel converts newer flavors of Javascript, Typescript, Elm or whatever into the older variants of Javascript that are supported by browsers.
+
+Can you just load file:///path…/index.html using the browser? Why or why not?
+
+    You can, but since index.html is importing most of it's content, nothing will show up since the browser isn't able to import bundle.js
+
+In webpack.config.js, what does the loader test entry test: /\.jsx?$/ do?
+
+    The /\.jsx?$/ is a regular expression that matches .js and .jsx files, which the loader presumably bundles up into bundle.js.
