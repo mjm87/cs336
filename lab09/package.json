@@ -1,6 +1,6 @@
 {
-  "name": "lab09",
-  "author": "kvlinden",
+  "name": "unit09-webpack",
+  "author": "mjm87",
   "version": "0.0.0",
   "description": "Webpacked version of the Facebook tutorial",
   "license": "ISC",
@@ -17,7 +17,6 @@
     "jquery": "^3.1.1",
     "jquery-ui": "^1.12.1",
     "nib": "^1.1.2",
-    "nodemon": "^1.18.5",
     "postcss-loader": "^1.0.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
@@ -32,6 +31,6 @@
   "scripts": {
     "build": "webpack --progress",
     "dev": "node server.js & webpack-dev-server --progress",
-    "start": "nodemon server.js"
+    "start": "node server.js"
   }
 }
