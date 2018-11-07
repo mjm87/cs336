@@ -1,0 +1,16 @@
+Exercise 10.1
+
+Compare and contrast MongoDB and the SQL databases you’ve used before. Are there things that one can do that the other can’t?
+
+    TODO:
+
+You could run MongoDB locally. What advantages and/or disadvantages would that bring with respect to the cloud database you have now?
+
+    
+
+You’ve built a “sandbox” database on mLab. Could you use this for a production database? Why or why not?
+
+    As long as you never needed a huge number of accesses or more than 0.5 GB of storage, I suppose you could scrape by for the smallest of projects.
+    However, for any non-trivial situation, it would definitely fall short long-term.
+
+Exercise 10.2
