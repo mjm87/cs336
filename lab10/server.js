@@ -10,14 +10,12 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-var fs = require('fs');
 var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var MongoClient = require('mongodb').MongoClient
-
-var COMMENTS_FILE = path.join(__dirname, 'comments.json');
+var db;
 
 app.set('port', (process.env.PORT || 3000));
 
@@ -37,59 +35,36 @@ app.use(function(req, res, next) {
 });
 
 app.get('/api/comments', function(req, res) {
-    fs.readFile(COMMENTS_FILE, function(err, data) {
-        if (err) {
-            console.error(err);
-            process.exit(1);
-        }
-        res.json(JSON.parse(data));
-    });
+    db.collection('comments').find({}).toArray(function(err, data) {
+        res.json(data);
+    })
 });
 
 app.post('/api/comments', function(req, res) {
-    fs.readFile(COMMENTS_FILE, function(err, data) {
-        if (err) {
-            console.error(err);
-            process.exit(1);
-        }
 
-        var comments = JSON.parse(data);
-        // NOTE: In a real implementation, we would likely rely on a database or
-        // some other approach (e.g. UUIDs) to ensure a globally unique id. We'll
-        // treat Date.now() as unique-enough for our purposes.
-        var newComment = {
-            id: Date.now(),
-            author: req.body.author,
-            text: req.body.text,
-        };
-        comments.push(newComment);
-        fs.writeFile(COMMENTS_FILE, JSON.stringify(comments, null, 4), function(err) {
-            if (err) {
-                console.error(err);
-                process.exit(1);
-            }
-            res.json(comments);
-        });
+    // update the database
+    db.collection('comments').insertOne({
+        id: Date.now(),
+        author: req.body.author,
+        text: req.body.text
     });
+
+    // re-retrieve the data with the newly inserted comment
+    db.collection('comments').find({}).toArray(function(err, data) {
+        res.json(data);
+    })
 });
-
-
-
-var db;
 
 // Load the MongoDB comments database
 var mongoURL = 'mongodb://cs336:'+process.env.MONGO_PASSWORD+'@ds253783.mlab.com:53783/cs336';
 MongoClient.connect(mongoURL, function(err, client) {
-   if (err) throw err;
-   db = client;
-   var comments = db.collection('comments');
-   db.collection('comments').find().toArray(function (err, result) {
-    if (err) throw err;
-    console.log(result);
-
-    app.listen(app.get('port'), function() {
-        console.log('Server started: http://localhost:' + app.get('port') + '/');
-    });
-    
+    if(err) throw err;
+    db = client;
+    db.collection('comments').find().toArray(function (err, result) {
+        if(err) throw err;
+        // Start listening for clients
+        app.listen(app.get('port'), function() {
+            console.log('Server started: http://localhost:' + app.get('port') + '/');
+        });
   })
 });

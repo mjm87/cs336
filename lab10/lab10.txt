@@ -2,15 +2,48 @@ Exercise 10.1
 
 Compare and contrast MongoDB and the SQL databases you’ve used before. Are there things that one can do that the other can’t?
 
-    TODO:
+    SQL databases seem to be able to take full advantage of the consistency of the schema to optimize queries and indexing.
+    Presumably MongoDB does some of that as well, but it definitely seems harder / slower with the more flexible document layout.
+    The other main advantage to SQL is the surrounding ecosystem of tools and software that interface with SQL stuff natively,
+    which you might end up needing to recreate if you're working with one of the many flavors of NoSQL.
+
+    MongoDB on the other hand has a far more flexible document structure and seems to fit more organically in a programming environment.
+    This enables MongoDB to have a strange and non-relational dataset with embedded data and other things that are highly frowned upon if even doable in a relational world.
+    It's distributed nature gives it some extra scalability that might be a little more work to do with a traditional SQL environment.
 
 You could run MongoDB locally. What advantages and/or disadvantages would that bring with respect to the cloud database you have now?
 
+    The advantage of a local MongoDB server would of course be fine grain access to it. You can keep it as up to date as you'd like.
+    You also wouldn't necessarily be paying for special features or extra space: you'd only be limited to the storage and power you have at your disposal.
+    The main disadvantage would be that you lose access to the distributed nature of a cloud database. 
+    All requests would have to go to your server.
+    All the data would have to live there.
+    You wouldn't necessarily have a backup server to switch to when you need to update your local server.
     
-
 You’ve built a “sandbox” database on mLab. Could you use this for a production database? Why or why not?
 
-    As long as you never needed a huge number of accesses or more than 0.5 GB of storage, I suppose you could scrape by for the smallest of projects.
-    However, for any non-trivial situation, it would definitely fall short long-term.
+    According to the blurb on mLab's website "sandbox" databases aren't intended for production environments. 
+    They have limited space (0.5 GB), but also no redundancy which would help maintain consistency and reliability.
+    mLab highly urges that you consider their paid plans for anything that needs high availability, consistent/predictable service, or secure access and communication.
 
 Exercise 10.2
+
+For this integration of mLab into your application, was it better to run the modified server (npm start) or the full Webpack development environment (npm run dev)? Why?
+
+    I ended up just using npm start, though not necessarily for any reason.
+    Typically I do like using the dev-environment so that my changes are automatically re-packaged.
+    I didn't do it that way, so I didn't run into any problems with it.
+    Perhaps you could struggle with saving before you have everything finished properly and end up breaking your development server in the process.
+    It's not much, but at least when using npm start you can decide to save whenever without worrying about crashing your dev instance.
+
+Explain what happens when you modify the database using mLab’s web interface rather than your application? Try adding/updating/deleting comment documents.
+
+    It seems to work. The webapp pulls from the database regularly enough that I never needed to refresh to see my changes take place.
+    It was possible to add comments that didn't have the required fields, so when I initially thought we were using "name" as the field for "author", my comment's author field was empty and didn't show up.
+    But it didn't crash and burn or anything.
+
+Is this comments application the sort of application that should use an SQL or a noSQL database? Explain your answer.
+
+    It definitely seems that for something simple and that doesn't need to be instantly reliable, a NoSQL database like
+    MongoDB is just fine. For something larger and more complex, I definitely might consider a relational database,
+    but this definitely works here.
