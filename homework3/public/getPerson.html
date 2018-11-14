@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Get Person</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="jquery-demo.css">
+</head>
+<body>
+    <h1> Get Person </h1>
+    <!-- Person ID Form -->
+    <div id="dialog-form" title="Find User">
+            <form id = "myForm">
+            <fieldset>
+                <label for="id">ID</label>
+                <input type="text" name="id" id="id" placeholder="1234567" class="text ui-widget-content ui-corner-all">
+                <div class="button">
+                    <button type="submit" class="ui-button ui-widget ui-corner-all">Find Person</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <!-- Person Display Table -->
+    <div id="users-contain" class="hidden">
+        <h1>Person Record:</h1>
+        <table id="users" class="ui-widget ui-widget-content">
+            <thead>
+            <tr class="ui-widget-header ">
+                <th>Name</th>
+                <th>ID</th>
+                <th>Years</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td id="return-name">Robinson Crusoe</td>
+                <td id="return-id">0000001</td>
+                <td id="return-years">28</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="getPerson.js"></script>
+</body>
+</html>
