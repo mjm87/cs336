@@ -1,129 +1,155 @@
 const express = require('express')
 const app = express()
 const bodyParser = require("body-parser")
+const MongoClient = require('mongodb').MongoClient
 
-var MongoClient = require('mongodb').MongoClient
-var db;
+var people;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// set the port to 3000
-app.set('port', (process.env.PORT || 3000));
-
-/* In-memory database */
-people = [
-    {"id":2425366, "name":"Michel Momeyer", "years":3}, 
-    {"id":0000042, "name":"Virginia Van Andel", "years":20},
-    {"id":666, "occupation":"problem-child"}
-];
-
-// retrieves the person object from the database with the id specified in the url
-function GetPerson(id){
-    for(i in people) {
-        let p = people[i];
-        // ensuring we only return valid matches
-        if(isAValidPerson(p)) {
-            if(p.id == id){
-                return p; 
-            }
-        }
-    }
-    return null;
-}
-
-// deletes any people with the given ID from the database
-function DeletePerson(id){
-    people = people.filter((person, idx, arr) => person.id != id);
-}
-
-// adds a person object to the person "database"
-function AddPerson(query) {
-    
-    // create the new person object
-    let person = {};
-    person.id = query.id;
-    person.name = query.name;
-    person.years = query.years;
-
-    // filter out any existing records for this person 
-    DeletePerson(query.id);
-
-    // add(or re-add) the person to the "database"
-    if(isAValidPerson(person)){
-        people.push(person);
-        return person;
-    }
-
-    return null;
-}
-
-// validating that the given person contains at least
-// an id a name and a seniority/years value
-function isAValidPerson(person) {
-    return (person.id != null && person.name != null && person.years != null);
-}
-
 app.use(express.static('public'))
 
-// displays the list of all the people objects in the "database"
-app.get('/people', (req, res) => res.json(people));
+// Set the port to 3000
+app.set('port', (process.env.PORT || 3000));
 
-// adds a person to the "database"
+// MongoDB query projections
+let all_columns = {"id":1, "name":1, "years":1, "_id":0};   // SELECT *
+let just_the_name = {"name":1, "_id":0};                    // SELECT name
+let just_the_years = {"years":1, "_id":0};                  // SELECT years
+
+// Displays the list of all the people objects in the "database"
+app.get('/people', function(req, res) {
+    let query = {};
+    people.find(query, all_columns).toArray(
+        (e, data) => res.json(data));
+});
+
+// Adds a person to the "database"
 app.post('/people', function (req, res) {
-    let person = AddPerson(req.body);
-    if(person != null) res.sendStatus(200);
-    else res.sendStatus(404);
+
+    if(isValidReqBody(req)) {
+
+        let person = {
+            id:req.body.id, 
+            name:req.body.name, 
+            years:req.body.years
+        };
+
+        people.insertOne(person, function(error, results){
+            if(error) {
+                res.sendStatus(404);
+                throw error;
+            }
+            res.sendStatus(200);
+        });
+    } else {
+        // the req.body doesn't contain all required fields
+        // so we'll indicate that it was a "bad request"
+        console.log("Couldn't process: " + JSON.stringify(req.body));
+        res.sendStatus(400);
+    }
 });
 
-// displays the specified person object (if the person exists)
+// Displays the specified person object (if the person exists)
 app.get('/person/:id', function(req, res) {
-    let person = GetPerson(req.params.id);
-    if (person != null) res.json(person);
-    else res.sendStatus(404);
+    let query = { "id":req.params.id };
+    people.findOne(query, all_columns, function(error, data){
+        if(error) res.sendStatus(404);
+        res.json(data);
+    });
 });
 
-// creates a new person record
+// Creates a new person record (or creates it)
 app.put('/person/:id', function (req, res) {
-    let person = AddPerson(req.body);
-    if(person != null) res.sendStatus(200);
-    else res.sendStatus(404);
+    
+    if(isValidReqBody(req)) {
+        
+        let person = {
+            id:req.body.id, 
+            name:req.body.name, 
+            years:req.body.years
+        };
+
+        let query = { "id":req.params.id};
+        people.updateOne(query, person, function(error, results){
+            if(error) {
+                res.sendStatus(404);
+                throw error;
+            }
+            res.sendStatus(200);
+        });
+    } else {
+        res.sendStatus(400);
+    }
 });
 
-// creates a new person record
+// Creates a new person record
 app.post('/person/:id', function (req, res) {
-    let person = AddPerson(req.body);
-    if(person != null) res.sendStatus(200);
-    else res.sendStatus(404);
+
+    if(isValidReqBody(req)) {
+        
+        let person = {
+            id:req.body.id, 
+            name:req.body.name, 
+            years:req.body.years
+        };
+
+        people.insertOne(person, function(error, results){
+            if(error) {
+                res.sendStatus(404);
+                throw error;
+            }
+            res.sendStatus(200);
+        });
+    } else {
+        res.sendStatus(400);
+    }
+
 });
 
-// delete a person record
+// Delete a person record
 app.delete('/person/:id', function (req, res) {
-    DeletePerson(req.params.id);
-    res.sendStatus(200);
+
+    let query = {"id":req.params.id};
+    people.deleteOne(query, function(error, results){
+        if(error) {
+            res.sendStatus(404);
+            throw error;
+        } 
+        res.sendStatus(200);
+    });
+
 });
 
 
-// displays the specified person's name (if it exists)
+// Displays the specified person's name (if it exists)
 app.get('/person/:id/name', function(req, res) {
-    let person = GetPerson(req.params);
-    if (person != null && person.name != null) res.json(person.name);
-    else res.sendStatus(404);
+    let query = { "id":req.params.id };
+    people.findOne(query, just_the_name, function(error, data){
+        //if(error) res.sendStatus(404);
+        if(error) {
+            res.json(error);
+            throw error;
+        }
+        res.json(data);
+    });
 });
 
-// displays the specified person's "seniority"
+// Displays the specified person's "seniority"
 app.get('/person/:id/years', function(req, res){
-    let person = GetPerson(req.params);
-    if (person != null && person.years != null) res.json(person.years);
-    else res.sendStatus(404);
+    let query = { "id":req.params.id };
+    people.findOne(query, just_the_years, function(error, data){
+        if(error) res.sendStatus(404);
+        res.json(data);
+    });
 });
 
 // Load the MongoDB comments database
 var mongoURL = 'mongodb://cs336:'+process.env.MONGO_PASSWORD+'@ds253783.mlab.com:53783/cs336';
 MongoClient.connect(mongoURL, function(err, client) {
     if(err) throw err;
-    db = client;
-    db.collection('people').find().toArray(function (err, result) {
+    people = client.collection('people');
+    people.find().toArray(function (err, result) {
         if(err) throw err;
         console.log(result);
         // Start listening for clients
@@ -132,3 +158,13 @@ MongoClient.connect(mongoURL, function(err, client) {
         });
   })
 });
+
+// Helper function to double-check that all the required components are present
+// to create a valid person record
+function isValidReqBody(req){
+    if(req.body.id == null) return false;
+    if(req.body.name == null) return false;
+    if(req.body.years == null) return false;
+    return true;
+}
+
