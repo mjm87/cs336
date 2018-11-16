@@ -6,6 +6,9 @@ const bodyParser = require("body-parser")
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// set the port to 3000
+app.set('port', (process.env.PORT || 3000));
+
 /* In-memory database */
 people = [
     {"id":2425366, "name":"Michel Momeyer", "years":3}, 
@@ -113,4 +116,4 @@ app.get('/person/:id/years', function(req, res){
     else res.sendStatus(404);
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(app.get('port'), function() { console.log('Server started: http://localhost:' + app.get('port') + '/'); });
