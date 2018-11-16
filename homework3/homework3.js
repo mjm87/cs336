@@ -1,7 +1,9 @@
 const express = require('express')
 const app = express()
-const port = 3000
 const bodyParser = require("body-parser")
+
+var MongoClient = require('mongodb').MongoClient
+var db;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -116,4 +118,17 @@ app.get('/person/:id/years', function(req, res){
     else res.sendStatus(404);
 });
 
-app.listen(app.get('port'), function() { console.log('Server started: http://localhost:' + app.get('port') + '/'); });
+// Load the MongoDB comments database
+var mongoURL = 'mongodb://cs336:'+process.env.MONGO_PASSWORD+'@ds253783.mlab.com:53783/cs336';
+MongoClient.connect(mongoURL, function(err, client) {
+    if(err) throw err;
+    db = client;
+    db.collection('people').find().toArray(function (err, result) {
+        if(err) throw err;
+        console.log(result);
+        // Start listening for clients
+        app.listen(app.get('port'), function() {
+            console.log('Server started: http://localhost:' + app.get('port') + '/');
+        });
+  })
+});
