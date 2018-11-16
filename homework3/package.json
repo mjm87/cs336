@@ -1,10 +1,10 @@
 {
-  "name": "homework2",
+  "name": "homework3",
   "version": "1.0.0",
   "description": "a webserver to store and display person info",
-  "main": "homework1.js",
+  "main": "homework3.js",
   "scripts": {
-    "start": "nodemon homework2.js"
+    "start": "nodemon homework3.js"
   },
   "author": "Michel Momeyer",
   "license": "ISC",
