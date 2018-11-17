@@ -1,13 +1,7 @@
-This sample code supports Calvin College
-[CS 336](https://cs.calvin.edu/courses/cs/336/kvlinden)
-[Unit 8: React](https://cs.calvin.edu/courses/cs/336/kvlinden/08react/index.html).
+FAIR WARNING: the majority of this code-base will still be using the Comment terminology from lab10.
+The code has been in part updated to reflect the trivial differences that are needed to display the
+person/directory sort of information, but it has been sorta hacked onto / into.
 
-These are the starter files for an implementation of the (old) Facebook ReactJS tutorial -
-the comment list:
+Essentially: this is the mutant child of Lab10 and Homework2 and the necessity of deadlines, which works but would need serious revisions (in terminology at least) if there were to be a Homework4 building upon this...
 
-- https://cs.calvin.edu/courses/cs/336/kvlinden/08react/backup/Tutorial_React.html
-(formerly at https://facebook.github.io/react/docs/tutorial.html)
-
-The completed lab exercise will serve as the basis for the application built in
-the "Application" section of the course.
-
+ALSO: Note if you're looking for the addPerson.html and getPerson.html static files, I simply copied them over into the dist/ directory since public no longer existed in lab10. There functionality is sorta replaced by the REACT frontend.
