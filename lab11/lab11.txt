@@ -1,0 +1,49 @@
+Questions:
+
+1. Compare and contrast your development and production deployments 
+    and explain how each is designed.
+
+    The production deployment is essentially the development deployment with some extra optimization goodies.
+    The one thing the development build has in it's webpack config is the devServer stuff, which is no longer
+    needed once you have a slug running on Heroku. The other main configuration change was just ensuring that 
+    npm start and npm install did everything that was necessary for Heroku to run the webapp.
+
+2. List the optimizations you’ve configured for this production version and, if possible, find evidence of then in the deployed application files.
+
+    Uglification:
+
+        Here's some sample code from the new bundle.js and while I'm sure my variable names could often be more descriptive...
+        I can definitely say I've never yet stooped to such poor naming choices.
+
+            function t(e,t,n,r){var o,i,a,s,u,l,c
+
+    OccurrenceOrder: 
+       
+        I'm not certain how to look for examples of this in the code, but I suspect it's naming 
+        the most commonly used variables/functions/etc with shorter names than their rarer counterparts.
+
+    ExtractText:
+
+        Again, I can't seem to find an example here, but I believe this technique is used to 
+        name components and scripts in such a way that when an updated version gets pushed out
+        the names of the files are changed to use a different hash so that none of the old cached
+        versions are still being used once the new version has gone live.
+
+3. What advantage is there is deploying an application to a PaaS tool like Heroku?
+
+    Convenience is probably the biggest one. While there is definitely some configuration work needed to "port"
+    a webapp to Heroku or another platform, I have a feeling it's a ton less work than configuring your own server.
+    And even if we did want to locally host a MongoDB server and the other pieces we needed ourselves, Heroku
+    will definitely do a better job of efficiently distributing workload and other things, at least as long as we 
+    pay for those sorts of services.
+
+4. How does Heroku know how to install and run your application (after pulling it from the specified branch on GitHub)?
+
+    Heroku is able to detect common frameworks like Node.js or Ruby on Rails, but for other platforms informing Heroku
+    on what to run can be done through a procfile.
+
+    Since we're working with Node.js, Heroku was able to identify the necessary dependencies by looking at the 
+    package.json file and presumably runs both npm install and npm start. 
+
+    To get additional config stuff like webpacking, we had to include that in our npm install step
+    which it wouldn't have known to do otherwise.
