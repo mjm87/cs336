@@ -2,16 +2,16 @@ import React from 'react';
 
 import '../css/base.css';
 
-// Comment Form
+// New Person Form
 module.exports = React.createClass({
   getInitialState: function() {
-    return {author: '', text: '', years: ''};
+    return {name: '', id: '', years: ''};
   },
-  handleAuthorChange: function(e) {
+  handleNameChange: function(e) {
     this.setState({author: e.target.value});
   },
-  handleTextChange: function(e) {
-    this.setState({text: e.target.value});
+  handleIdChange: function(e) {
+    this.setState({id: e.target.value});
   },
   handleSeniorityChange: function(e) {
     this.setState({years: e.target.value});
@@ -19,13 +19,13 @@ module.exports = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     var author = this.state.author.trim();
-    var text = this.state.text.trim();
+    var id = this.state.id.trim();
     var years = this.state.years.trim();
-    if (!text || !author || !years) {
+    if (!id || !author || !years) {
       return;
     }
-    this.props.onCommentSubmit({name: author, id: text, years: years});
-    this.setState({author: '', text: '', years: ''});
+    this.props.onPersonSubmit({name: author, id: id, years: years});
+    this.setState({author: '', id: '', years: ''});
   },
   render: function() {
     return (
@@ -33,8 +33,8 @@ module.exports = React.createClass({
         <input
           type="text"
           placeholder="Your ID"
-          value={this.state.text}
-          onChange={this.handleTextChange}
+          value={this.state.id}
+          onChange={this.handleIdChange}
         />
         <input
           type="text"
