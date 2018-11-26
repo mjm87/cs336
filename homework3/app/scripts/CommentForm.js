@@ -8,7 +8,7 @@ module.exports = React.createClass({
     return {name: '', id: '', years: ''};
   },
   handleNameChange: function(e) {
-    this.setState({author: e.target.value});
+    this.setState({name: e.target.value});
   },
   handleIdChange: function(e) {
     this.setState({id: e.target.value});
@@ -18,14 +18,14 @@ module.exports = React.createClass({
   },
   handleSubmit: function(e) {
     e.preventDefault();
-    var author = this.state.author.trim();
+    var name = this.state.name.trim();
     var id = this.state.id.trim();
     var years = this.state.years.trim();
-    if (!id || !author || !years) {
+    if (!id || !name || !years) {
       return;
     }
-    this.props.onPersonSubmit({name: author, id: id, years: years});
-    this.setState({author: '', id: '', years: ''});
+    this.props.onPersonSubmit({name: name, id: id, years: years});
+    this.setState({name: '', id: '', years: ''});
   },
   render: function() {
     return (
@@ -39,8 +39,8 @@ module.exports = React.createClass({
         <input
           type="text"
           placeholder="Your Name"
-          value={this.state.author}
-          onChange={this.handleAuthorChange}  
+          value={this.state.name}
+          onChange={this.handleNameChange}  
         />
         <input
           type="text"
