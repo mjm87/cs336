@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Add Person</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="jquery-demo.css">
+</head>
+<body>
+    <h1> Add Person </h1>
+    <div id="dialog-form" title="Create new user">
+        <!-- <form action="/people" method="post"> -->
+        <form id="myForm">
+            <fieldset>
+                <!-- Name -->
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" placeholder="Jayne Cobb" class="text ui-widget-content ui-corner-all">
+
+                <!-- ID -->
+                <label for="id">ID</label>
+                <input type="text" name="id" id="id" placeholder="1234567" class="text ui-widget-content ui-corner-all">
+
+                <!-- Seniority -->
+                <label for="years">years</label>
+                <input type="years" name="years" id="years" placeholder="0" class="text ui-widget-content ui-corner-all">
+            
+                <!-- Submit button -->
+                <div class="button">
+                    <button type="submit" class="ui-button ui-widget ui-corner-all">Send your message</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <script src="addPerson.js"></script>
+</body>
+</html>
