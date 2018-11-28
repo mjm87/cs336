@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 
 import CommentBox from './CommentBox.js';
 
-ReactDOM.render(
-    <CommentBox url="/api/comments" pollInterval={2000} />,
-    document.getElementById('content')
+import { Router, Route, browserHistory } from 'react-router';
+
+ReactDOM.render((
+    <Router history={browserHistory}>
+        <Route path="/" component={CommentBox}/>
+    </Router>
+    ), document.getElementById('content')
 )
-
-
