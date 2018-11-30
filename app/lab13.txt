@@ -1,0 +1,46 @@
+Exercise 1
+
+
+What benefit did using the React Router bring to the application?
+
+    This means that we don't need a separate html page for each route we want our user to access,
+    but rather can utilize the full capability of React components.
+
+Which is better, hash history or browser history?
+
+    Browser history seems to be more convenient for users,
+    since they don't have to worry about the extra junk cluttering up their browser bar.
+
+Why does the server (either Webpack Dev Server or the Express server) have to be modified to support the browser history?
+Compare this with the hash-based server demonstrated in class, which didn't require such modifications.
+
+    The server modification needed to be made so that the webpage can gracefully handle routes that it doesn't know what they are / were.
+    Hash history would store some of that information in the URL, but the browser history stores that information in the browser
+    and might not have access to it on a refresh.
+ 
+
+Exercise 2
+ 
+
+What state does the new CommentEdit component maintain and how does that
+compare with the state maintained by the CommentBox component?
+
+ 
+    It only has the author and the text in it's state, but this author and this state are almost like temporary state.
+    Changes made to these don't directly affect the CommentBox state, but rather updates the database which then updates the CommentBox state.
+ 
+What does the CommentEdit component do when the AJAX PUT or DELETE methods return successfully? 
+
+    It returns the user to the main webapp with the comment list.
+
+How does this compare with what the “Cancel” button provided by the CommentEdit component does?
+
+    From a user perspective I'm not certain. The PUT/DELETE success states uses the .push command which 
+    I would suspect maintains a stacked browser history so that backwards and forwards works as expected.
+    However, I suppose because we're using browserHistory, the <Link> element in cancel seems to do the same sort of thing in my testing.
+
+How is the Link added in the last step different from a simple HTML hyperlink?
+
+    Well it's a React component which probably translates into an HTML hyperlink eventually, but it also 
+    seems to take a slightly different destination argument, which can parse the React Routes that we've set up,
+    rather than relying on the proper URL that a regular dumb old HTML link would provide.
