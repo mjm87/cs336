@@ -1,0 +1,48 @@
+-----------------------
+Exercise 9.1
+-----------------------
+* What good has this bundling done? How big is the new bundle file? Check the Chrome DevTools network log to see what files are being loaded.
+    + The bundle is to 1.34 MB. The index.html and the bundle.js are being loaded.
+* What role did Babel play in the bundling?
+    + Babel is used to take newer versions of Javascript or other languages and compiling them to browser-compatible javascript.
+* Can you just load file:///path…/index.html using the browser? Why or why not?
+    + You can, but you won't see much since the index.html doesn't do much. You need the server to be running
+    for the bundle.js to be properly parsed so that the page can be displayed as expected.
+* In webpack.config.js, what does the loader test entry test: /\.jsx?$/ do?
+    + The regular expression matches any .js or .jsx files, which are the files the loader should be looking to package up.
+
+
+-----------------------
+Exercise 9.2
+-----------------------
+* Check out the new dist/index.html and dist/bundle.js. How are they different from the previous versions?
+    + They appear to be about the same size, which is strange to me since I would expect the additional libraries to take up considerable room.
+    Perhaps even stranger, they appear to be identical files with no noticeable differences between them. Despite running
+    npm run build on a commit prior to the tweaks and again now, my copied dist/* contents match the newly regenerated dist/* files.
+* What good is it to replace the CDN library loads with module imports?
+    + I suppose you don't have to worry about other dependencies or perhaps subtle differences in the files provided by a CDN.
+    By controlling which versions of the libraries are being used, you ensure that there won't be any unexpected changes to
+    the library that would affect you. It also allows the imports to be in the same place as they're being used, rather than being bundled
+    with the presentation html - which doesn't seem to be the right place to be importing javascript.
+* Check the network log. How many of the new modules you built are being loaded? How about the CSS file?
+    + It still just appears to be the localhost document (presumably just the index.html file) and the bundle.js.
+    None of the new modules are being explicitly loaded, since they're packaged together in the bundle.js
+
+-----------------------
+Exercise 9.3
+-----------------------
+* Try out both ports and explain the difference between them.
+        localhost:3001 — Try editing one of the React module files. Explain what happens, both to the displayed SPA webpage and to the bundle/index files.
+        localhost:3000 — Try loading /api/comments. Explain what you get. Does the SPA page running on this port change (due to the edits made above) as well?
+
+    Just adding a comment through the interface updates both the webpages. Modifying the source modules, however only makes a change to the 3001 website. 
+    The 3000 port based website is neither updated graphically with the new code tweaks, nor is the bundle.js reloaded. The 3001 one however has a change
+    to both the visual web-page and the source bundle.js that was recompiled automagically after the change.
+
+    However the change isn't made to the /api/comments section, since that is outside the purview of the modules in app and is defined in server.js instead.
+
+* Is it worth all this trouble to build a development configuration?
+
+    For this small helloworld web-page it is almost definitely overkill. 
+    For more substantial projects though this would be awesome. It's handy that I don't have to go in and rebuild every time I make a tweak to the modules.
+    But it also allows us to completely wreck the website with a tweak, while still keeping our clients happily using the untouched production version.
