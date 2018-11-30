@@ -17,9 +17,11 @@ var app = express();
 var MongoClient = require('mongodb').MongoClient
 var db;
 
+
 app.set('port', (process.env.PORT || 3000));
 
-app.use('/', express.static(path.join(__dirname, 'dist')));
+var APP_PATH = path.join(__dirname, 'dist');
+app.use('/', express.static(APP_PATH));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -97,6 +99,8 @@ MongoClient.connect(mongoURL, function(err, client) {
     db.collection('comments').find().toArray(function (err, result) {
         if(err) throw err;
         // Start listening for clients
+
+        app.use('*', express.static(APP_PATH));
         app.listen(app.get('port'), function() {
             console.log('Server started: http://localhost:' + app.get('port') + '/');
         });
